@@ -69,17 +69,18 @@ fn main() {
     let ref_vec = vec.iter().map(|x| x).collect::<Vec<&usize>>();
     let slice = &[ref_vec.as_slice()];
     let mut permutator = Permutator::new(slice);
+    let mut search_4_words = true;
     if let Some(mut permutation) = permutator.next() {
       if permutation.len() == 3 {
         check_3_word_combinations(&permutation, &filtered_space, &seed)
       } else {
-        check_4_word_combinations(&permutation, &filtered_space, &seed);
+        check_4_word_combinations(&permutation, &filtered_space, &seed, &mut search_4_words);
       }
       while permutator.next_with_buffer(&mut permutation) {
         if permutation.len() == 3 {
           check_3_word_combinations(&permutation, &filtered_space, &seed)
         } else {
-          check_4_word_combinations(&permutation, &filtered_space, &seed);
+          check_4_word_combinations(&permutation, &filtered_space, &seed, &mut search_4_words);
         }
       }
     }
@@ -122,7 +123,11 @@ fn check_4_word_combinations(
   permutation: &[&usize],
   filtered_space: &HashMap<anagram::array::CharFreq, std::collections::HashSet<&str>>,
   seed: &[anagram::array::CharFreq],
+  continue_computation: &mut bool,
 ) {
+  if !*continue_computation {
+    return;
+  }
   let hard_hash = "665e5bcb0c20062fe8abaaf4628bb154";
   let first = &filtered_space[&seed[*permutation[0]]];
   let second = &filtered_space[&seed[*permutation[1]]];
@@ -136,6 +141,7 @@ fn check_4_word_combinations(
           let hash = format!("{:x}", md5::compute(&phrase));
           if hash == hard_hash {
             println!("the hard phrase is: {}", phrase);
+            *continue_computation = false;
             return;
           }
         }
