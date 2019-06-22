@@ -1,0 +1,17 @@
+[package]
+name = "anagram"
+version = "0.1.0"
+authors = ["happysalada <raphael.megzari@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "anagram"
+path = "src/lib.rs"
+
+[[bin]]
+name = "main"
+path = "src/main.rs"
+
+[dependencies]
+md5 = "0.6.1"
+permutate = "0.3.2"
