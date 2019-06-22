@@ -1,0 +1,10 @@
+run with `cargo run --release`
+this will display all the anagram solutions to the anagram problem found
+[here](https://followthewhiterabbit.trustpilot.com/cs/step3.html)
+the program does an early return, so finding the solution takes more or less time
+depending on how lucky you are. On average it takes 10 mins
+(I have only tried 5 times, so take my average with some skepticism)
+
+I'm interested in how this program could be made more palatable. Currently it's
+a little hard to read I find.
+I'm sure there are a couple of macros to generalize some of the things I wrote.
